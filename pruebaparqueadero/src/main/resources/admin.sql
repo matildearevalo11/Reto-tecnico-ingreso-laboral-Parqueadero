@@ -1,0 +1,1 @@
+INSERT INTO usuario (email, contrasenia, nombre, rol) VALUES ('admin@mail.com','$2a$10$yTFWAZBwH8oVPAPDIj.35O7DxPwyN.ZXGAL5zuRHRHcR79ruE5G8W', 'Administrador', 'ADMIN')

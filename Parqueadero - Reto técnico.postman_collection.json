@@ -1,0 +1,664 @@
+{
+	"info": {
+		"_postman_id": "959347e9-3d46-402f-989f-f598b728c95b",
+		"name": "Parqueadero - Reto técnico",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37063199"
+	},
+	"item": [
+		{
+			"name": "Inicio de sesión",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@mail.com\",\r\n    \"contrasenia\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registro socio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY3NDQzNiwiZXhwIjoxNzIxNjk2MDM2fQ.j7bZarFb9NsHtwpr5tEMdYe5qEjAS__FJOdBVsVvwvY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"mila.carrillo@mail.com\",\r\n    \"contrasenia\": \"mila2024\",\r\n    \"nombre\": \"Mila Carrillo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cierre de sesión",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY2NDUxMywiZXhwIjoxNzIxNjg2MTEzfQ.SHrn_Tw2D_k5Pm9MJ-E42S2KJEIFxbxU_nCGbE6yOnE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Indicadores - 10 vehículos más registrados",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY2NDUxMywiZXhwIjoxNzIxNjg2MTEzfQ.SHrn_Tw2D_k5Pm9MJ-E42S2KJEIFxbxU_nCGbE6yOnE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/indicadores/10-vehiculos-mas-registrados",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"indicadores",
+						"10-vehiculos-mas-registrados"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Indicadores - 10 vehículos más registrados por parqueadero",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY2NDUxMywiZXhwIjoxNzIxNjg2MTEzfQ.SHrn_Tw2D_k5Pm9MJ-E42S2KJEIFxbxU_nCGbE6yOnE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/indicadores/10-vehiculos-mas-registrados-parqueadero/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"indicadores",
+						"10-vehiculos-mas-registrados-parqueadero",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Indicadores - Obtener vehículos primer ingreso por parqueadero",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY2NDUxMywiZXhwIjoxNzIxNjg2MTEzfQ.SHrn_Tw2D_k5Pm9MJ-E42S2KJEIFxbxU_nCGbE6yOnE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/indicadores/vehiculos-primer-ingreso/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"indicadores",
+						"vehiculos-primer-ingreso",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Indicadores - Buscar placa por coincidencia",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY2NDUxMywiZXhwIjoxNzIxNjg2MTEzfQ.SHrn_Tw2D_k5Pm9MJ-E42S2KJEIFxbxU_nCGbE6yOnE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/indicadores/buscar-placa-por-coincidencia?placaCoincidencia=456",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"indicadores",
+						"buscar-placa-por-coincidencia"
+					],
+					"query": [
+						{
+							"key": "placaCoincidencia",
+							"value": "456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Indicadores - Obtener ganancias por día",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwiaWF0IjoxNzIxNjY4MjA3LCJleHAiOjE3MjE2ODk4MDd9.qRQS9SHeRdGLkujkFWg58tu3VUCMxGtqoADSDTaH9-U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/indicadores/ganancias-dia/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"indicadores",
+						"ganancias-dia",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Indicadores - Obtener ganancias por mes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwiaWF0IjoxNzIxNjY4MjA3LCJleHAiOjE3MjE2ODk4MDd9.qRQS9SHeRdGLkujkFWg58tu3VUCMxGtqoADSDTaH9-U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/indicadores/ganancias-mes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"indicadores",
+						"ganancias-mes",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Indicadores - Obtener ganancias por año",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwiaWF0IjoxNzIxNjY4MjA3LCJleHAiOjE3MjE2ODk4MDd9.qRQS9SHeRdGLkujkFWg58tu3VUCMxGtqoADSDTaH9-U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/indicadores/ganancias-anio/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"indicadores",
+						"ganancias-anio",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Parqueadero - Todos mis parqueaderos como socio",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwiaWF0IjoxNzIxNjY4MjA3LCJleHAiOjE3MjE2ODk4MDd9.qRQS9SHeRdGLkujkFWg58tu3VUCMxGtqoADSDTaH9-U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"socio\": 52,\r\n  \"nombre\": \"Estacionamiento Norte\",\r\n  \"direccion\": \"Calle Norte 5678, Ciudad\",\r\n  \"capacidadVehicular\": \"75\",\r\n  \"costoHora\": 3.00\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/parqueadero/todos-mis-parqueaderos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"parqueadero",
+						"todos-mis-parqueaderos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Parqueadero - Registre ingreso",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwiaWF0IjoxNzIxNjY4MjA3LCJleHAiOjE3MjE2ODk4MDd9.qRQS9SHeRdGLkujkFWg58tu3VUCMxGtqoADSDTaH9-U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"placa\": \"DBN111\",\r\n    \"marca\": \"Nissan\",\r\n    \"modelo\": \"123\",\r\n    \"color\": \"rojo\",\r\n    \"idParqueadero\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/parqueadero/registre-ingreso",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"parqueadero",
+						"registre-ingreso"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Parqueadero - Registrar salida",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwiaWF0IjoxNzIxNjY4MjA3LCJleHAiOjE3MjE2ODk4MDd9.qRQS9SHeRdGLkujkFWg58tu3VUCMxGtqoADSDTaH9-U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"placa\": \"DBN111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/parqueadero/registrar-salida",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"parqueadero",
+						"registrar-salida"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Parqueadero - Crear parqueadero",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY3NDQzNiwiZXhwIjoxNzIxNjk2MDM2fQ.j7bZarFb9NsHtwpr5tEMdYe5qEjAS__FJOdBVsVvwvY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"socio\": 3,\r\n  \"nombre\": \"Estacionamiento Norte\",\r\n  \"direccion\": \"Calle Norte 5678, Ciudad\",\r\n  \"capacidadVehicular\": \"75\",\r\n  \"costoHora\": 3.00\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/parqueadero/crear-parqueadero",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"parqueadero",
+						"crear-parqueadero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Parqueadero - Obtener parqueadero",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY3NDQzNiwiZXhwIjoxNzIxNjk2MDM2fQ.j7bZarFb9NsHtwpr5tEMdYe5qEjAS__FJOdBVsVvwvY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/parqueadero/obtener-parqueadero/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"parqueadero",
+						"obtener-parqueadero",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Parqueadero - Actualizar parqueadero",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY3NDQzNiwiZXhwIjoxNzIxNjk2MDM2fQ.j7bZarFb9NsHtwpr5tEMdYe5qEjAS__FJOdBVsVvwvY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idSocio\": 5,\r\n    \"nombre\": \"Parqueadero noroeste\",\r\n    \"direccion\": \"Calle 1234\",\r\n    \"capacidadVehicular\": \"10\",\r\n    \"costoHora\": 4.50\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/parqueadero/actualizar-parqueadero/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"parqueadero",
+						"actualizar-parqueadero",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Parqueadero - Eliminar parqueadero",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY3NDQzNiwiZXhwIjoxNzIxNjk2MDM2fQ.j7bZarFb9NsHtwpr5tEMdYe5qEjAS__FJOdBVsVvwvY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/parqueadero/eliminar-parqueadero/52",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"parqueadero",
+						"eliminar-parqueadero",
+						"52"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vehículo - Todos los vehículos actuales",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY3NDQzNiwiZXhwIjoxNzIxNjk2MDM2fQ.j7bZarFb9NsHtwpr5tEMdYe5qEjAS__FJOdBVsVvwvY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/vehiculo/todos-los-vehiculos-actuales/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"vehiculo",
+						"todos-los-vehiculos-actuales",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vehículo - Ver detalle vehículos actuales por parqueadero",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTcyMTY3NDQzNiwiZXhwIjoxNzIxNjk2MDM2fQ.j7bZarFb9NsHtwpr5tEMdYe5qEjAS__FJOdBVsVvwvY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/vehiculo/detalle-vehiculos-actuales/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"vehiculo",
+						"detalle-vehiculos-actuales",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
