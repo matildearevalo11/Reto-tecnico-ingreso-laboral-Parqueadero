@@ -6,7 +6,6 @@
 <div align="center">
   
 ![nelumbo](https://github.com/user-attachments/assets/b395b8bb-0985-45a2-8d9e-302a9c45460f)
-
 </div>
 
 ## Índice
