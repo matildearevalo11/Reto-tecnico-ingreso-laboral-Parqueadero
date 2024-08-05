@@ -6,7 +6,6 @@
 <div align="center">
   
 ![nelumbo](https://github.com/user-attachments/assets/b395b8bb-0985-45a2-8d9e-302a9c45460f)
-
 </div>
 
 ## Índice
@@ -69,23 +68,23 @@ ___
 
 #### Instalación y uso
 
-1. Clonar el repositorio del proyecto
+- Clonar el repositorio del proyecto
 Abre una terminal o consola de comandos.
-Clona el repositorio del proyecto utilizando el siguiente comando "git clone" seguido de la url del repositorio, tal como se muestra a continuación:
+Clona el repositorio del proyecto utilizando el siguiente comando "git clone" seguido de la url del repositorio, tal como se muestra a continuación: 
 ```sh
 git clone https://github.com/matildearevalo11/Reto-tecnico-ingreso-laboral-Parqueadero.git
 ```
-2. Crear bases de datos para ambos microservicios (API parqueadero - API Email)
+- Crear bases de datos para ambos microservicios (API parqueadero - API Email):  
 Se abre el gestor de BD pgAdmin4 y se crean dos bases de datos
 "correos": Esta base de datos será consumida por la API parqueadero. Debe ser en PostgreSQL.
 "parqueadero": Esta base de datos será utilizada para la gestión del parqueadero y consumirá la API correos. Debe ser en PostgreSQL.
-3. Abrir proyectos
+- Abrir proyectos: 
 Después de haber creado las bases de datos localmente, abre las carpetas correspondientes a cada microservicio de manera independiente. Utiliza un IDE como IntelliJ IDEA Community Edition para esta tarea.
 Abre cada carpeta de microservicio en una instancia separada del IDE. Cuando se solicite, selecciona la opción "Trust Project" para ambos proyectos.
 Esto permitirá que los proyectos se carguen correctamente y comiencen a descargar las dependencias necesarias automáticamente.
-4. Ejecutar ambos microservicios
+- Ejecutar ambos microservicios: 
 Ambos proyectos comenzarán a instalar las múltiples dependencias que hay en ellos. Una vez terminado, en la parte derecha del IDE encontrarás un botón "Maven". Haz clic en él, selecciona "Plugins", luego "spring-boot" y por último "spring-boot:run".
-5. Probar las funcionalidades con Postman
+- Probar las funcionalidades con Postman: 
 Una vez que ambos microservicios estén en funcionamiento, importa la colección de Postman disponible en el repositorio para probar las diferentes funcionalidades de ambos microservicios.
 Es crucial que ambos microservicios estén corriendo simultáneamente para evitar errores, ya que el microservicio de parqueadero depende de una funcionalidad del microservicio de correo.
 
