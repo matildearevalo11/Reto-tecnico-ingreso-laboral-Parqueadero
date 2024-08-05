@@ -3,11 +3,15 @@ package com.prueba.pruebaparqueadero.controllers;
 import com.prueba.pruebaparqueadero.entities.Vehiculo;
 import com.prueba.pruebaparqueadero.services.ParqueaderoService;
 import com.prueba.pruebaparqueadero.services.VehiculoService;
+import com.prueba.pruebaparqueadero.services.dtos.VehiculoDTO;
 import com.prueba.pruebaparqueadero.services.dtos.VehiculosParqueadosDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -37,9 +41,8 @@ public class IndicadoresController {
 
     @GetMapping("/vehiculos-primer-ingreso/{idParqueadero}")
     @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('SOCIO')")
-    public ResponseEntity<List<VehiculosParqueadosDTO>> obtenerVehiculosPrimerIngreso(@PathVariable int idParqueadero) {
-        List<VehiculosParqueadosDTO> vehiculos = vehiculoService.obtenerVehiculosPrimerIngreso(idParqueadero);
-        return ResponseEntity.ok(vehiculos);
+    public Page<VehiculosParqueadosDTO> obtenerVehiculosPrimerIngreso(@PathVariable int idParqueadero, Pageable pageable) {
+        return vehiculoService.obtenerVehiculosPrimerIngreso(idParqueadero, pageable);
     }
 
     @GetMapping("/ganancias-dia/{idParqueadero}")
@@ -65,8 +68,7 @@ public class IndicadoresController {
 
     @GetMapping("/buscar-placa-por-coincidencia")
     @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('SOCIO')")
-    public ResponseEntity<List<Vehiculo>> buscarVehiculosPorPlaca(@RequestParam String placaCoincidencia) {
-        List<Vehiculo> vehiculos = vehiculoService.buscarVehiculosPorPlaca(placaCoincidencia);
-        return ResponseEntity.ok(vehiculos);
+    public Page<VehiculoDTO> buscarVehiculosPorPlaca(@RequestParam String placaCoincidencia, Pageable pageable) {
+        return vehiculoService.buscarVehiculosPorPlaca(placaCoincidencia, pageable);
     }
 }

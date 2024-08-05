@@ -75,31 +75,4 @@ public class JwtService {
         }
 
 
-
-
-    public long calcularDuracionToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
-                .getBody();
-
-        LocalDateTime issuedAt = claims.getIssuedAt().toInstant()
-                .atZone(ZoneOffset.systemDefault())
-                .toLocalDateTime();
-        LocalDateTime expiration = claims.getExpiration().toInstant()
-                .atZone(ZoneOffset.systemDefault())
-                .toLocalDateTime();
-
-        Duration duration = Duration.between(issuedAt, expiration);
-        return duration.getSeconds();
-    }
-
-    public String getTokenFromContext() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getCredentials() instanceof String) {
-            return (String) authentication.getCredentials();
-        }
-        return null;
-    }
-
     }

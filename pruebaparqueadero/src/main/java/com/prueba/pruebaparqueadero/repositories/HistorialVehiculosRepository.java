@@ -2,6 +2,8 @@ package com.prueba.pruebaparqueadero.repositories;
 
 import com.prueba.pruebaparqueadero.entities.HistorialVehiculos;
 import com.prueba.pruebaparqueadero.entities.Vehiculo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +22,7 @@ public interface HistorialVehiculosRepository extends JpaRepository<HistorialVeh
 
 
     @Query("SELECT h FROM HistorialVehiculos h WHERE h.parqueadero.id = :idParqueadero AND h.salida IS NULL")
-    List<HistorialVehiculos> findByPorParqueadero(@Param("idParqueadero") int idParqueadero);
+    Page<HistorialVehiculos> findByPorParqueadero(@Param("idParqueadero") int idParqueadero, Pageable pageable);
 
     @Query("SELECT h.vehiculo.placa, COUNT(h) FROM HistorialVehiculos h GROUP BY h.vehiculo ORDER BY COUNT(h) DESC")
     List<Object[]>findVehiculosMasRegistrados();

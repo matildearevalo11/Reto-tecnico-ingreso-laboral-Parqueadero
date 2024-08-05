@@ -1,4 +1,5 @@
 package com.prueba.pruebaparqueadero.entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 

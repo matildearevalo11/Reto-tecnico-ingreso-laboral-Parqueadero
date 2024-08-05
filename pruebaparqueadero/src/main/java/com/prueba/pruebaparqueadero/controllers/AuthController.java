@@ -36,14 +36,4 @@ public class AuthController {
         return "logout";
     }
 
-    @GetMapping("/token-duracion")
-    public ResponseEntity<?> obtenerDuracionToken(@RequestParam String token) {
-        try {
-            long duracion = jwtService.calcularDuracionToken(token);
-            return ResponseEntity.ok(Collections.singletonMap("duracion", duracion));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Collections.singletonMap("mensaje", "Token inválido o expirado"));
-        }
-    }
 }

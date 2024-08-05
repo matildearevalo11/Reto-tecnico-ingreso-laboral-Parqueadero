@@ -1,10 +1,19 @@
 package com.prueba.pruebaparqueadero.services;
 
+import com.prueba.pruebaparqueadero.exceptions.ConflictException;
+import com.prueba.pruebaparqueadero.exceptions.NotFoundException;
 import com.prueba.pruebaparqueadero.feignclients.CorreoFeignClients;
 import com.prueba.pruebaparqueadero.feignclients.dto.CorreoRequestDTO;
+import com.prueba.pruebaparqueadero.services.dtos.ParqueaderoDTO;
+import com.prueba.pruebaparqueadero.services.dtos.VehiculosParqueadosDTO;
 import feign.FeignException;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -28,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +48,7 @@ public class ParqueaderoService {
     private final VehiculoRepository vehiculoRepository;
     private final HistorialVehiculosRepository historialVehiculosRepository;
     private final CorreoFeignClients correoFeignClients;
+    private final ModelMapper modelMapper;
     private static final Logger logger = LoggerFactory.getLogger(ParqueaderoService.class);
 
 
@@ -48,12 +59,14 @@ public class ParqueaderoService {
             parqueadero.setSocio(socio);
             return parqueaderoRepository.save(parqueadero);
         } else {
-            throw new RuntimeException("No se encontró el socio identificado con: " + idSocio);
+            throw new NotFoundException("No se encontró el socio identificado con: " + idSocio);
         }
     }
 
-    public Parqueadero obtenerParqueadero(int id) {
-        return parqueaderoRepository.findById(id).orElse(null);
+    public ParqueaderoDTO obtenerParqueadero(int id) {
+        Parqueadero parqueadero = parqueaderoRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Parqueadero con el id " + id + " no encontrado"));
+        return modelMapper.map(parqueadero, ParqueaderoDTO.class);
     }
 
     public Parqueadero actualizarParqueadero(int id, Parqueadero parqueadero) {
@@ -81,13 +94,13 @@ public class ParqueaderoService {
             Vehiculo vehiculo = vehiculoOptional.get();
             Optional<HistorialVehiculos> historialActualOptional = historialVehiculosRepository.findByVehiculoAndSalidaIsNull(vehiculo);
             if (historialActualOptional.isPresent()) {
-                throw new RuntimeException("No se puede registrar ingreso, ya existe una entrada no salida para este vehículo");
+                throw new ConflictException("No se puede Registrar Ingreso, ya existe la placa en este u otro parqueadero");
             }
         }
 
         Optional<Parqueadero> parqueaderoOptional = parqueaderoRepository.findById(vehiculoDTO.getIdParqueadero());
         if (!parqueaderoOptional.isPresent()) {
-            throw new RuntimeException("Parqueadero no encontrado");
+            throw new NotFoundException("Parqueadero no encontrado");
         }
         Parqueadero parqueadero = parqueaderoOptional.get();
 
@@ -129,13 +142,13 @@ public class ParqueaderoService {
     public void registrarSalidaVehiculo(String placa) {
         Optional<Vehiculo> vehiculoOptional = vehiculoRepository.findByPlaca(placa);
         if (!vehiculoOptional.isPresent()) {
-            throw new RuntimeException("No se puede Registrar Salida, no existe la placa en el parqueadero");
+            throw new NotFoundException("No se puede Registrar Salida, no existe la placa en el parqueadero");
         }
         Vehiculo vehiculo = vehiculoOptional.get();
 
         Optional<HistorialVehiculos> historialOptional = historialVehiculosRepository.findByVehiculoAndSalidaIsNull(vehiculo);
         if (!historialOptional.isPresent()) {
-            throw new RuntimeException("No se encontró un registro de entrada activo para el vehículo con placa " + placa);
+            throw new NotFoundException("No se encontró un registro de entrada activo para el vehículo con placa " + placa);
         }
 
         HistorialVehiculos historial = historialOptional.get();
@@ -145,7 +158,7 @@ public class ParqueaderoService {
 
     private BigDecimal calcularCostoParqueadero(LocalDateTime entrada, LocalDateTime salida, BigDecimal costoHora) {
         if (salida == null) {
-            throw new IllegalArgumentException("El vehículo aún sigue en el parqueadero");
+            throw new ConflictException("El vehículo aún sigue en el parqueadero");
         }
 
         long minutos = java.time.Duration.between(entrada, salida).toMinutes();
@@ -170,7 +183,7 @@ public class ParqueaderoService {
 
     public BigDecimal calcularGananciasDelDia(int idParqueadero) {
         Parqueadero parqueadero = parqueaderoRepository.findById(idParqueadero)
-                .orElseThrow(() -> new RuntimeException("Parqueadero no encontrado"));
+                .orElseThrow(() -> new NotFoundException("Parqueadero no encontrado"));
 
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime inicioDia = now.toLocalDate().atStartOfDay();
@@ -181,7 +194,7 @@ public class ParqueaderoService {
 
     public BigDecimal calcularGananciasDelMes(int idParqueadero) {
         Parqueadero parqueadero = parqueaderoRepository.findById(idParqueadero)
-                .orElseThrow(() -> new RuntimeException("Parqueadero no encontrado"));
+                .orElseThrow(() -> new ConflictException("Parqueadero no encontrado"));
 
         LocalDate now = LocalDate.now();
         LocalDate inicioMes = now.withDayOfMonth(1);
@@ -192,7 +205,7 @@ public class ParqueaderoService {
 
     public BigDecimal calcularGananciasDelAnio(int idParqueadero) {
         Parqueadero parqueadero = parqueaderoRepository.findById(idParqueadero)
-                .orElseThrow(() -> new RuntimeException("Parqueadero no encontrado"));
+                .orElseThrow(() -> new ConflictException("Parqueadero no encontrado"));
         LocalDate now = LocalDate.now();
         LocalDate inicioAnio = now.withDayOfYear(1);
         LocalDate finAnio = now.plusYears(1).withDayOfYear(1);
@@ -200,10 +213,24 @@ public class ParqueaderoService {
         return calcularGananciasPorPeriodo(inicioAnio.atStartOfDay(), finAnio.atStartOfDay(), idParqueadero);
     }
 
-    public List<Parqueadero> obtenerParqueaderosPorUsuarioSocio(int idUsuario) {
-        return parqueaderoRepository.findBySocio_Id(idUsuario);
+    public Page<ParqueaderoDTO> obtenerParqueaderosPorUsuarioSocio(int idUsuario, Pageable pageable) {
+        Page<Parqueadero> parqueaderos = parqueaderoRepository.findBySocio_Id(idUsuario, pageable);
+        List<ParqueaderoDTO> listParqueadero = parqueaderos.getContent().stream().map(p -> modelMapper.map(p, ParqueaderoDTO.class)).collect(Collectors.toList());
+        Page<ParqueaderoDTO> parqueaderoDTOPage = new PageImpl<>(listParqueadero, pageable, parqueaderos.getTotalElements());
+        return parqueaderoDTOPage;
     }
+
+    public Page<ParqueaderoDTO> obtenerParqueaderosExistentes(Pageable pageable) {
+        Page<Parqueadero> parqueaderos = parqueaderoRepository.findAll(pageable);
+        List<ParqueaderoDTO> listParqueadero = parqueaderos.getContent().stream().map(p -> modelMapper.map(p, ParqueaderoDTO.class)).collect(Collectors.toList());
+        Page<ParqueaderoDTO> parqueaderoDTOPage = new PageImpl<>(listParqueadero, pageable, parqueaderos.getTotalElements());
+        return parqueaderoDTOPage;
+
+    }
+
 }
+
+
 
 
 
