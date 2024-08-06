@@ -1,18 +1,20 @@
 package com.prueba.pruebaparqueadero.services.dtos;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collector;
 
 @Data
 public class ParqueaderoDTO {
+    @NotNull(message = "El id del socio es obligatorio.")
     private int idSocio;
+    @NotBlank(message = "El nombre del parqueadero es obligatorio.")
     private String nombre;
+    @NotBlank(message = "La dirección del parqueadero es obligatorio.")
     private String direccion;
-    private String capacidadVehicular;
+    @NotNull(message = "La capacidad vehicular del parqueadero no puede estar vacía.")
+    private int capacidadVehicular;
+    @NotNull(message = "El costo de hora no puede estar vacío.")
     private BigDecimal costoHora;
 
 }
