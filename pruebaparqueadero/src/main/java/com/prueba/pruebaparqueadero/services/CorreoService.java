@@ -10,9 +10,9 @@ import org.springframework.web.client.RestTemplate;
 public class CorreoService {
 
     private final RestTemplate restTemplate;
-    private final String correoServiceUrl = "http://localhost:8082/api/correos";
+    private static final String CORREO_SERVICE_URL = "http://localhost:8082/api/correos";
 
     public void enviarCorreo(CorreoDTO correoDTO) {
-        restTemplate.postForEntity(correoServiceUrl, correoDTO, Void.class);
+        restTemplate.postForEntity(CORREO_SERVICE_URL, correoDTO, Void.class);
     }
 }

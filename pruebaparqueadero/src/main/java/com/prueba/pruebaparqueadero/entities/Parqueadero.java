@@ -1,5 +1,4 @@
 package com.prueba.pruebaparqueadero.entities;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,6 +8,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name= "parqueadero")
 public class Parqueadero {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +26,7 @@ public class Parqueadero {
     private String direccion;
 
     @Column(name = "capacidad_vehicular")
-    private String capacidadVehicular;
+    private int capacidadVehicular;
 
     @Column(name = "costo_hora")
     private BigDecimal costoHora;

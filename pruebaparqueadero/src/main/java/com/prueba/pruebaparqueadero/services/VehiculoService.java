@@ -8,10 +8,11 @@ import com.prueba.pruebaparqueadero.services.dtos.VehiculoDTO;
 import com.prueba.pruebaparqueadero.services.dtos.VehiculosParqueadosDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import java.util.*;
-import java.util.stream.Collectors;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
@@ -21,26 +22,24 @@ public class VehiculoService {
 
     private final VehiculoRepository vehiculoRepository;
     private final HistorialVehiculosRepository historialRepository;
+    private static final Logger logger = LoggerFactory.getLogger(VehiculoService.class);
+
 
     public Page<VehiculoDTO> buscarVehiculosPorPlaca(String placaCoincidencia, Pageable pageable) {
         Page<Vehiculo> vehiculos = vehiculoRepository.findByPlacaCoincidencia(placaCoincidencia, pageable);
         List<VehiculoDTO> listVehiculos = vehiculos.getContent().stream()
                 .map(v -> new VehiculoDTO(v.getPlaca(), v.getParqueadero().getId(), v.getMarca(),
-                        v.getModelo(), v.getColor()))
-                .collect(Collectors.toList());
+                        v.getModelo(), v.getColor())).toList();
 
-        Page<VehiculoDTO> parqueaderoDTOPage = new PageImpl<>(listVehiculos, pageable, vehiculos.getTotalElements());
-        return parqueaderoDTOPage;
+        return new PageImpl<>(listVehiculos, pageable, vehiculos.getTotalElements());
     }
 
     public Page<VehiculoDTO> obtenerDetalleVehiculosPorParqueadero(int idParqueadero, Pageable pageable) {
         Page<Vehiculo> vehiculos = vehiculoRepository.findByPorParqueadero(idParqueadero, pageable);
         List<VehiculoDTO> listVehiculo = vehiculos.getContent().stream()
                 .map(v -> new VehiculoDTO(v.getPlaca(), v.getParqueadero().getId(), v.getMarca(),
-                        v.getModelo(), v.getColor()))
-                        .collect(Collectors.toList());
-        Page<VehiculoDTO> vehiculoDTO = new PageImpl<>(listVehiculo, pageable, vehiculos.getTotalElements());
-        return vehiculoDTO;
+                        v.getModelo(), v.getColor())).toList();
+        return new PageImpl<>(listVehiculo, pageable, vehiculos.getTotalElements());
     }
     public Page<VehiculosParqueadosDTO> obtenerVehiculosPorParqueadero(int idParqueadero, Pageable pageable) {
         Page<HistorialVehiculos> historiales = historialRepository.findByPorParqueadero(idParqueadero, pageable);
@@ -48,10 +47,8 @@ public class VehiculoService {
         List<VehiculosParqueadosDTO> vehiculos = historiales.getContent().stream()
                 .map(h -> new VehiculosParqueadosDTO(h.getId(),
                         h.getVehiculo().getPlaca(),
-                        h.getEntrada()))
-                .collect(Collectors.toList());
-        Page<VehiculosParqueadosDTO> vehiculosParqueadosDTOS = new PageImpl<>(vehiculos, pageable, historiales.getTotalElements());
-        return vehiculosParqueadosDTOS;
+                        h.getEntrada())).toList();
+        return new PageImpl<>(vehiculos, pageable, historiales.getTotalElements());
     }
 
     public List<Map<String, Object>> obtenerVehiculosMasRegistrados() {
@@ -66,8 +63,7 @@ public class VehiculoService {
                     mapa.put("placa", placa);
                     mapa.put("cantidadIngresos", cantidadIngresos);
                     return mapa;
-                })
-                .collect(Collectors.toList());
+                }).toList();
     }
 
     public List<Map<String, Object>> obtenerVehiculosMasRegistradosPorParqueadero(int idParqueadero) {
@@ -82,15 +78,14 @@ public class VehiculoService {
                     mapa.put("placa", placa);
                     mapa.put("cantidadIngresos", cantidadIngresos);
                     return mapa;
-                })
-                .collect(Collectors.toList());
+                }).toList();
     }
 
     @Transactional
     public Page<VehiculosParqueadosDTO> obtenerVehiculosPrimerIngreso(int idParqueadero, Pageable pageable) {
         Page<VehiculosParqueadosDTO> vehiculosActuales = obtenerVehiculosPorParqueadero(idParqueadero, pageable);
         if (vehiculosActuales.isEmpty()) {
-            System.out.println("No hay vehículos en el parqueadero con ID: " + idParqueadero);
+            logger.error("No hay vehículos en el parqueadero con ID: {}", idParqueadero);
             return vehiculosActuales;
         }
 
@@ -98,9 +93,8 @@ public class VehiculoService {
                 .filter(v -> {
                     long count = historialRepository.countEntriesByPlacaAndParqueadero(v.getPlaca(), idParqueadero);
                     return count == 1;
-                }).collect(Collectors.toList());
+                }).toList();
 
-        Page<VehiculosParqueadosDTO> vehiculos = new PageImpl<>(vehiculosNuevos, pageable, vehiculosActuales.getTotalElements());
-        return vehiculos;
+        return new PageImpl<>(vehiculosNuevos, pageable, vehiculosActuales.getTotalElements());
     }
 }

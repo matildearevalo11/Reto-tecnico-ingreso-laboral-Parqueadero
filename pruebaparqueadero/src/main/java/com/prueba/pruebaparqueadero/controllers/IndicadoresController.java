@@ -1,12 +1,10 @@
 package com.prueba.pruebaparqueadero.controllers;
 
-import com.prueba.pruebaparqueadero.entities.Vehiculo;
 import com.prueba.pruebaparqueadero.services.ParqueaderoService;
 import com.prueba.pruebaparqueadero.services.VehiculoService;
 import com.prueba.pruebaparqueadero.services.dtos.VehiculoDTO;
 import com.prueba.pruebaparqueadero.services.dtos.VehiculosParqueadosDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
