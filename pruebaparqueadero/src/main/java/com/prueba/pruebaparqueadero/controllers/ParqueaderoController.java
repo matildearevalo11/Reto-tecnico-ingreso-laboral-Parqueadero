@@ -47,7 +47,6 @@ public class ParqueaderoController {
 
     }
 
-
     @DeleteMapping("/eliminar-parqueadero/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Map<String, String>> eliminarParqueadero(@PathVariable int id) {

@@ -81,17 +81,21 @@ public class ParqueaderoService {
         parqueaderoRepository.deleteById(id);
     }
 
-    @Transactional
+     @Transactional
     public int registrarEntradaVehiculo(VehiculoDTO vehiculoDTO, String email) {
-        Vehiculo vehiculo = vehiculoRepository.findByPlaca(vehiculoDTO.getPlaca())
-                .orElseThrow(() -> new ConflictException("No se puede Registrar Ingreso, ya existe la placa en este u otro parqueadero"));
+        Optional<Vehiculo> vehiculoOptional = vehiculoRepository.findByPlaca(vehiculoDTO.getPlaca());
+        if (vehiculoOptional.isPresent()) {
+            Vehiculo vehiculo = vehiculoOptional.get();
+            Optional<HistorialVehiculos> historialActualOptional = historialVehiculosRepository.findByVehiculoAndSalidaIsNull(vehiculo);
+            if (historialActualOptional.isPresent()) {
+                throw new ConflictException("No se puede registrar ingreso, ya existe una entrada no salida para este vehículo");
+            }
+        }
 
-        HistorialVehiculos historialOptional = historialVehiculosRepository.findByVehiculoAndSalidaIsNull(vehiculo)
-                .orElseThrow(() -> new ConflictException("No se puede Registrar Ingreso, ya existe la placa en este u otro parqueadero"));
+         Parqueadero parqueadero = parqueaderoRepository.findById(vehiculoDTO.getIdParqueadero())
+                 .orElseThrow(() -> new NotFoundException(PARQUEADERO_NO_ENCONTRADO));
 
-        Parqueadero parqueadero = parqueaderoRepository.findById(vehiculoDTO.getIdParqueadero())
-                .orElseThrow(() -> new NotFoundException(PARQUEADERO_NO_ENCONTRADO));
-
+        Vehiculo vehiculo = new Vehiculo();
         vehiculo.setPlaca(vehiculoDTO.getPlaca());
         vehiculo.setMarca(vehiculoDTO.getMarca());
         vehiculo.setModelo(vehiculoDTO.getModelo());
@@ -99,11 +103,12 @@ public class ParqueaderoService {
         vehiculo.setParqueadero(parqueadero);
         vehiculo = vehiculoRepository.save(vehiculo);
 
-        historialOptional.setVehiculo(vehiculo);
-        historialOptional.setParqueadero(parqueadero);
-        historialOptional.setEntrada(LocalDateTime.now());
-        historialOptional.setSalida(null);
-        historialOptional = historialVehiculosRepository.save(historialOptional);
+        HistorialVehiculos historial = new HistorialVehiculos();
+        historial.setVehiculo(vehiculo);
+        historial.setParqueadero(parqueadero);
+        historial.setEntrada(LocalDateTime.now());
+        historial.setSalida(null);
+        historial = historialVehiculosRepository.save(historial);
 
         try {
             CorreoRequestDTO correoRequestDTO = guardarCorreo(vehiculo, parqueadero);
@@ -112,7 +117,7 @@ public class ParqueaderoService {
             logger.error("El servicio de correo no está disponible debido a lo siguiente: ".concat(e.getMessage()));
         }
 
-        return historialOptional.getId();
+        return historial.getId();
     }
 
     private CorreoRequestDTO guardarCorreo(Vehiculo vehiculo, Parqueadero parqueadero) {

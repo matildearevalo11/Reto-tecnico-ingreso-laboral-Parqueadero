@@ -16,7 +16,7 @@ public class Parqueadero {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "id_socio", nullable = false)
+    @JoinColumn(referencedColumnName = "id", nullable = false)
     private Usuario socio;
 
     @Column(name = "nombre")

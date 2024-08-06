@@ -14,11 +14,11 @@ public class HistorialVehiculos {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "id_parqueadero", nullable = false)
+    @JoinColumn(referencedColumnName = "id", nullable = false)
     private Parqueadero parqueadero;
 
     @ManyToOne
-    @JoinColumn(name = "placa", nullable = false)
+    @JoinColumn(referencedColumnName = "placa",  nullable = false)
     private Vehiculo vehiculo;
 
     @Column(name = "entrada", nullable = false)

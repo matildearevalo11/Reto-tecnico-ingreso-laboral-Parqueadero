@@ -24,10 +24,10 @@ public class Usuario implements UserDetails {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name = "contrasenia", nullable = false)
+    @Column(nullable = false)
     private String contrasenia;
 
     @Column(name = "nombre", nullable = false)

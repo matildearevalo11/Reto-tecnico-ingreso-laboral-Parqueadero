@@ -16,7 +16,7 @@ public class Token {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(referencedColumnName = "id")
     private Usuario idUsuario;
     @Column(name = "jwt_token")
     private String tokenJwt;

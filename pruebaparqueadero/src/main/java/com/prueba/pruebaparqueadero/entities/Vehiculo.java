@@ -15,7 +15,7 @@ public class Vehiculo {
     private String placa;
 
     @ManyToOne
-    @JoinColumn(name = "id_parqueadero", nullable = false)
+    @JoinColumn(referencedColumnName = "id", nullable = false)
     private Parqueadero parqueadero;
 
     @Column(name = "marca", nullable = false)
