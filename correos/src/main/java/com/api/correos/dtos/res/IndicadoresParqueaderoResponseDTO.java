@@ -1,2 +1,9 @@
-package com.api.correos.dtos.res;public class IndicadoresParqueaderoResponseDTO {
+package com.api.correos.dtos.res;
+
+import lombok.Data;
+
+@Data
+public class IndicadoresParqueaderoResponseDTO {
+    String nombreParqueadero;
+    int cantidadIngresos;
 }

@@ -1,21 +1,25 @@
 package com.api.correos.entities;
-
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.time.LocalDateTime;
+
 @Data
-@Entity
-@Table(name= "correo")
+@Document("correos")
+@JsonPropertyOrder({"id", "email", "placa", "mensaje", "nombre_parqueadero, entrada"})
 public class Correo {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Column(name = "email")
+    private String id;
     private String email;
-    @Column(name = "placa")
     private String placa;
-    @Column(name = "mensaje")
     private String mensaje;
-    @Column(name = "id_parqueadero")
-    private int idParqueadero;
+    @Field(name = "nombre_parqueadero")
+    private String nombre;
+    private LocalDateTime entrada;
 }
+
+

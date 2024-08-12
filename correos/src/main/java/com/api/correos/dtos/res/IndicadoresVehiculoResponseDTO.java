@@ -1,5 +1,6 @@
 package com.api.correos.dtos.res;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

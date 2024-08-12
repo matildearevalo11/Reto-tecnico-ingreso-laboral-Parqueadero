@@ -3,8 +3,9 @@ package com.api.correos.dtos.req;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
-@RequiredArgsConstructor
 public class CorreoDTO {
 
 
@@ -12,4 +13,5 @@ public class CorreoDTO {
     private String placa;
     private String mensaje;
     private String nombre;
+    private LocalDateTime entrada;
 }
