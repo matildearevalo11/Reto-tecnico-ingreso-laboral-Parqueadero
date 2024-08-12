@@ -1,12 +1,12 @@
-package com.prueba.pruebaparqueadero.services.dtos;
+package com.prueba.pruebaparqueadero.services.dtos.req;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
-public class VehiculoDTO {
+public class VehiculoRequestDTO {
 
     @NotBlank(message = "El número de placa es obligatorio.")
     private String placa;

@@ -1,4 +1,4 @@
-package com.api.correos.dtos;
+package com.api.correos.dtos.req;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -11,5 +11,5 @@ public class CorreoDTO {
     private String email;
     private String placa;
     private String mensaje;
-    private int idParqueadero;
+    private String nombre;
 }

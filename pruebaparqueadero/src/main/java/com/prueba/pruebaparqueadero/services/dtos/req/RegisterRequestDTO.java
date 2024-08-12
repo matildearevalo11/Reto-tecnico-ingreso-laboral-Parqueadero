@@ -1,4 +1,4 @@
-package com.prueba.pruebaparqueadero.auth;
+package com.prueba.pruebaparqueadero.services.dtos.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class RegisterRequestDTO {
     String email;
     String contrasenia;
     String nombre;

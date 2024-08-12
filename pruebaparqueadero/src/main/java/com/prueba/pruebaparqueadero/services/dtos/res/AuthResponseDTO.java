@@ -1,4 +1,4 @@
-package com.prueba.pruebaparqueadero.auth;
+package com.prueba.pruebaparqueadero.services.dtos.res;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponse {
+public class AuthResponseDTO {
     String token;
 }

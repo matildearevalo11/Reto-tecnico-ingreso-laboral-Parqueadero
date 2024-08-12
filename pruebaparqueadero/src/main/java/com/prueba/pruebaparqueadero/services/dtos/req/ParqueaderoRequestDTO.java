@@ -1,11 +1,13 @@
-package com.prueba.pruebaparqueadero.services.dtos;
+package com.prueba.pruebaparqueadero.services.dtos.req;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
 import java.math.BigDecimal;
 
 @Data
-public class ParqueaderoDTO {
+public class ParqueaderoRequestDTO {
     @NotNull(message = "El id del socio es obligatorio.")
     private int idSocio;
     @NotBlank(message = "El nombre del parqueadero es obligatorio.")

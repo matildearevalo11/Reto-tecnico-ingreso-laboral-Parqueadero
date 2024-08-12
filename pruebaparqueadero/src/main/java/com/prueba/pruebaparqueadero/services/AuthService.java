@@ -1,11 +1,10 @@
 package com.prueba.pruebaparqueadero.services;
 
-import com.prueba.pruebaparqueadero.auth.AuthResponse;
-import com.prueba.pruebaparqueadero.auth.LoginRequest;
-import com.prueba.pruebaparqueadero.auth.RegisterRequest;
+import com.prueba.pruebaparqueadero.services.dtos.res.AuthResponseDTO;
+import com.prueba.pruebaparqueadero.services.dtos.req.LoginRequestDTO;
+import com.prueba.pruebaparqueadero.services.dtos.req.RegisterRequestDTO;
 import com.prueba.pruebaparqueadero.entities.Rol;
 import com.prueba.pruebaparqueadero.entities.Usuario;
-import com.prueba.pruebaparqueadero.repositories.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,22 +18,22 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AuthService {
 
-    private final UsuarioRepository userRepository;
+    private final UsuarioService usuarioService;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public AuthResponse login(LoginRequest request) {
+    public AuthResponseDTO login(LoginRequestDTO request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getContrasenia()));
-        UserDetails user=userRepository.findByEmail(request.getEmail()).orElseThrow();
+        UserDetails user=usuarioService.findByUserEmail(request.getEmail());
         String token=jwtService.getToken(user);
-        return AuthResponse.builder()
+        return AuthResponseDTO.builder()
                 .token(token)
                 .build();
 
     }
 
-    public AuthResponse register(RegisterRequest request) {
+    public AuthResponseDTO register(RegisterRequestDTO request) {
         Usuario user = Usuario.builder()
                 .email(request.getEmail())
                 .contrasenia(passwordEncoder.encode( request.getContrasenia()))
@@ -42,8 +41,8 @@ public class AuthService {
                 .rol(Rol.SOCIO)
                 .build();
 
-        userRepository.save(user);
-        return AuthResponse.builder().token(jwtService.getToken(user)).build();
+        usuarioService.crearSocio(user);
+        return AuthResponseDTO.builder().token(jwtService.getToken(user)).build();
     }
 
 }
