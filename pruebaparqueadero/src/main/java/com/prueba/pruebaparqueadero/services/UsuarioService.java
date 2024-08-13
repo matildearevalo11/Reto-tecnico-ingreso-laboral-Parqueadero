@@ -4,7 +4,6 @@ import com.prueba.pruebaparqueadero.entities.Rol;
 import com.prueba.pruebaparqueadero.entities.Usuario;
 import com.prueba.pruebaparqueadero.exceptions.ConflictException;
 import com.prueba.pruebaparqueadero.exceptions.NotFoundException;
-import com.prueba.pruebaparqueadero.repositories.ParqueaderoRepository;
 import com.prueba.pruebaparqueadero.repositories.UsuarioRepository;
 import com.prueba.pruebaparqueadero.services.dtos.res.ParqueaderoResponseDTO;
 import com.prueba.pruebaparqueadero.services.dtos.res.UsuarioResponseDTO;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

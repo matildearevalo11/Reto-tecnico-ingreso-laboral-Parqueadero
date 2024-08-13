@@ -1,5 +1,4 @@
 package com.prueba.pruebaparqueadero.services;
-
 import com.prueba.pruebaparqueadero.entities.HistorialVehiculos;
 import com.prueba.pruebaparqueadero.entities.Parqueadero;
 import com.prueba.pruebaparqueadero.entities.Vehiculo;
@@ -7,8 +6,6 @@ import com.prueba.pruebaparqueadero.exceptions.ConflictException;
 import com.prueba.pruebaparqueadero.exceptions.NotFoundException;
 import com.prueba.pruebaparqueadero.feignclients.CorreoFeignClients;
 import com.prueba.pruebaparqueadero.feignclients.dto.CorreoRequestDTO;
-import com.prueba.pruebaparqueadero.repositories.HistorialVehiculosRepository;
-import com.prueba.pruebaparqueadero.repositories.ParqueaderoRepository;
 import com.prueba.pruebaparqueadero.repositories.VehiculoRepository;
 import com.prueba.pruebaparqueadero.services.dtos.req.VehiculoRequestDTO;
 import com.prueba.pruebaparqueadero.services.dtos.res.*;
@@ -18,10 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.*;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +35,7 @@ public class VehiculoService {
 
 
     @Transactional
-    public int registrarEntradaVehiculo(VehiculoRequestDTO vehiculoDTO, int idUsuario) {
+    public HistorialVehiculosResponseDTO registrarEntradaVehiculo(VehiculoRequestDTO vehiculoDTO, int idUsuario) {
         Optional<Vehiculo> vehiculoOptional = vehiculoRepository.findByPlaca(vehiculoDTO.getPlaca());
         if (vehiculoOptional.isPresent()) {
             Vehiculo vehiculo = vehiculoOptional.get();
@@ -79,7 +74,7 @@ public class VehiculoService {
             logger.error("El servicio de correo no está disponible debido a lo siguiente: ".concat(e.getMessage()));
         }
 
-        return historial.getId();
+        return  modelMapper.map(historial, HistorialVehiculosResponseDTO.class);
     }
 
     private CorreoRequestDTO guardarCorreo(Vehiculo vehiculo, Parqueadero parqueadero, LocalDateTime entrada) {

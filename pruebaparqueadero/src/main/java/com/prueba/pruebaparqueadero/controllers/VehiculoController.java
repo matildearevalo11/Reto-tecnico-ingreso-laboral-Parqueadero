@@ -1,9 +1,8 @@
 package com.prueba.pruebaparqueadero.controllers;
-
 import com.prueba.pruebaparqueadero.configuration.SecurityUtils;
 import com.prueba.pruebaparqueadero.services.VehiculoService;
 import com.prueba.pruebaparqueadero.services.dtos.req.VehiculoRequestDTO;
-import com.prueba.pruebaparqueadero.services.dtos.res.RegistroResponseDTO;
+import com.prueba.pruebaparqueadero.services.dtos.res.HistorialVehiculosResponseDTO;
 import com.prueba.pruebaparqueadero.services.dtos.res.VehiculoResponseDTO;
 import com.prueba.pruebaparqueadero.services.dtos.res.VehiculosParqueaderoResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,8 @@ public class VehiculoController {
     @ResponseStatus(HttpStatus.CREATED)
     public int registrarEntradaVehiculo(@RequestBody VehiculoRequestDTO vehiculoDTO) {
         int idUsuario = SecurityUtils.obtenerUsuarioActual().getId();
-        return vehiculoService.registrarEntradaVehiculo(vehiculoDTO, idUsuario);
+        HistorialVehiculosResponseDTO historial = vehiculoService.registrarEntradaVehiculo(vehiculoDTO, idUsuario);
+        return historial.getId();
     }
 
     @PostMapping("/save-output/parking")

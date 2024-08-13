@@ -1,7 +1,5 @@
 package com.prueba.pruebaparqueadero.controllers;
-
 import com.prueba.pruebaparqueadero.configuration.SecurityUtils;
-import com.prueba.pruebaparqueadero.services.ParqueaderoService;
 import com.prueba.pruebaparqueadero.services.UsuarioService;
 import com.prueba.pruebaparqueadero.services.dtos.res.ParqueaderoResponseDTO;
 import lombok.RequiredArgsConstructor;

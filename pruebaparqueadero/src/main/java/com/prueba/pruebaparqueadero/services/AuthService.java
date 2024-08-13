@@ -45,4 +45,9 @@ public class AuthService {
         return AuthResponseDTO.builder().token(jwtService.getToken(user)).build();
     }
 
+    public void logout(String authHeader) {
+        String token = authHeader.substring(7);
+        jwtService.revokeToken(token);
+    }
+
 }

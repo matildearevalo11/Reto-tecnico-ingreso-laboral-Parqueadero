@@ -68,6 +68,9 @@ public class ParqueaderoService {
     }
 
     public void eliminarParqueadero(int id) {
+        if (!parqueaderoRepository.existsById(id)) {
+            throw new NotFoundException("Parqueadero con id " + id + " no encontrado.");
+        }
         parqueaderoRepository.deleteById(id);
     }
 

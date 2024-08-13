@@ -2,6 +2,8 @@ package com.prueba.pruebaparqueadero.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Data
@@ -16,6 +18,7 @@ public class Vehiculo {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Parqueadero parqueadero;
 
     @Column(name = "marca", nullable = false)

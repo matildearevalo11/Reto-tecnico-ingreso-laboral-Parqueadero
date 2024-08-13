@@ -1,11 +1,7 @@
 package com.prueba.pruebaparqueadero.controllers;
-
-import com.prueba.pruebaparqueadero.configuration.SecurityUtils;
 import com.prueba.pruebaparqueadero.services.ParqueaderoService;
 import com.prueba.pruebaparqueadero.services.dtos.req.ParqueaderoRequestDTO;
-import com.prueba.pruebaparqueadero.services.dtos.req.VehiculoRequestDTO;
 import com.prueba.pruebaparqueadero.services.dtos.res.ParqueaderoResponseDTO;
-import com.prueba.pruebaparqueadero.services.dtos.res.RegistroResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

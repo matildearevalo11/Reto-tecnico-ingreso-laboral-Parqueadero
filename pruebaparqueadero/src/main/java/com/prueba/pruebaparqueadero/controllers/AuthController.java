@@ -27,8 +27,12 @@ public class AuthController {
     }
 
     @PostMapping(value = "logout")
-    public String logout(){
-        return "logout";
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('SOCIO')")
+    public String logout(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            authService.logout(authHeader);
+        }
+        return "Logout";
     }
 
 }

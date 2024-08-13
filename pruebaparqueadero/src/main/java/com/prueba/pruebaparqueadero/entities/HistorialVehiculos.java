@@ -2,6 +2,9 @@ package com.prueba.pruebaparqueadero.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.time.LocalDateTime;
 @Data
 @Entity
@@ -15,6 +18,7 @@ public class HistorialVehiculos {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Parqueadero parqueadero;
 
     @ManyToOne

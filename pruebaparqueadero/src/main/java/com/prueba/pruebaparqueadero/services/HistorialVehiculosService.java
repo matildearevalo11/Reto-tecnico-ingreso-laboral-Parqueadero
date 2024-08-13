@@ -1,22 +1,12 @@
 package com.prueba.pruebaparqueadero.services;
-
 import com.prueba.pruebaparqueadero.entities.HistorialVehiculos;
-import com.prueba.pruebaparqueadero.entities.Rol;
-import com.prueba.pruebaparqueadero.entities.Usuario;
 import com.prueba.pruebaparqueadero.entities.Vehiculo;
-import com.prueba.pruebaparqueadero.exceptions.ConflictException;
-import com.prueba.pruebaparqueadero.exceptions.NotFoundException;
 import com.prueba.pruebaparqueadero.repositories.HistorialVehiculosRepository;
-import com.prueba.pruebaparqueadero.services.dtos.res.RegistroResponseDTO;
-import com.prueba.pruebaparqueadero.services.dtos.res.UsuarioResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import com.prueba.pruebaparqueadero.entities.Token;
+import com.prueba.pruebaparqueadero.repositories.TokenRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
@@ -17,6 +20,11 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
 
     private static final String SECRET_KEY="586E3272357538782F413F4428472B4B6250655368566B597033733676397924";
+    private final TokenRepository tokenRepository;
+
+    public JwtService(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
+    }
 
     public String getToken(UserDetails user) {
         return getToken(new HashMap<>(), user);
@@ -38,16 +46,18 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-        public String getEmailFromToken(String token) {
+    public String getEmailFromToken(String token) {
             return getClaim(token, Claims::getSubject);
         }
 
-        public boolean isTokenValid(String token, UserDetails userDetails) {
-            final String email=getEmailFromToken(token);
-            return (email.equals(userDetails.getUsername())&& !isTokenExpired(token));
-        }
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String email = getEmailFromToken(token);
+        return (email.equals(userDetails.getUsername()) && !isTokenExpired(token) && !isTokenRevoked(token));
+    }
 
-        private Claims getAllClaims(String token){
+
+
+    private Claims getAllClaims(String token){
             return Jwts
                     .parserBuilder().setSigningKey(getKey())
                     .build()
@@ -68,5 +78,24 @@ public class JwtService {
             return getExpiration(token).before(new Date());
         }
 
+        private boolean isTokenRevoked(String token) {
+            return tokenRepository.findByToken(token).isPresent();
+        }
+
+        public void revokeToken(String token) {
+            Date expiration = new Date();
+
+            Token revokedToken = Token.builder()
+                    .token(token)
+                    .expiration(expiration)
+                    .build();
+            tokenRepository.save(revokedToken);
+            System.out.println("Token revocado: " + token);
+        }
+
+    public Long getUserId(String token) {
+        Integer idInteger = getClaim(token, claims -> claims.get("id", Integer.class));
+        return idInteger != null ? idInteger.longValue() : null;
+    }
 
     }
