@@ -59,7 +59,7 @@ ___
 ![MER-Parqueadero](https://github.com/user-attachments/assets/7e0c11f6-439b-42dd-b123-e9db0b33ab81)
 
 
-#### Herramientas utilizadas
+### Herramientas utilizadas
 ___
 
   1. [![Intellij IDEA](https://img.shields.io/badge/Intellij%20IDEA-%23DE1F6A)](https://www.jetbrains.com/idea/)
@@ -68,7 +68,7 @@ ___
 
 
 
-#### Instalación y uso
+### Instalación y uso
 
 - Clonar el repositorio del proyecto
 Abre una terminal o consola de comandos.
