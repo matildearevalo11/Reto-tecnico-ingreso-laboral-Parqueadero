@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +43,7 @@ public class VehiculoService {
             Vehiculo vehiculo = vehiculoOptional.get();
             Optional<HistorialVehiculos> historialActualOptional = historialVehiculosService.findByVehiculoAndSalidaIsNull(vehiculo);
             if (historialActualOptional.isPresent()) {
-                throw new ConflictException("No se puede registrar ingreso, ya existe una entrada no salida para este vehículo");
+                throw new ConflictException("No se puede registrar ingreso, ya existe una entrada para este vehículo");
             }
         }
 
@@ -50,6 +52,11 @@ public class VehiculoService {
 
         if(parqueadero.getSocio().getId() != idUsuario){
             throw new ConflictException("Este socio no puede añadir entradas a parqueaderos que no tiene a cargo.");
+        }
+
+        long totalVehiculos = historialVehiculosService.countByParqueaderoAndSalidaIsNull(parqueadero.getId());
+        if (totalVehiculos >= parqueadero.getCapacidadVehicular()) {
+            throw new ConflictException("El parqueadero está lleno. No se puede registrar más vehículos.");
         }
 
         Vehiculo vehiculo = new Vehiculo();
@@ -65,6 +72,7 @@ public class VehiculoService {
         historial.setParqueadero(parqueadero);
         historial.setEntrada(LocalDateTime.now());
         historial.setSalida(null);
+        historial.setTotal(BigDecimal.valueOf(0.0));
         historial = historialVehiculosService.save(historial);
 
         try {
@@ -88,7 +96,7 @@ public class VehiculoService {
     }
 
     @Transactional
-    public String registrarSalidaVehiculo(String placa) {
+    public MensajeResponseDTO registrarSalidaVehiculo(String placa) {
         Vehiculo vehiculo = vehiculoRepository.findByPlaca(placa)
                 .orElseThrow(() -> new NotFoundException("No se puede Registrar Salida, no existe la placa en el parqueadero"));
 
@@ -99,8 +107,11 @@ public class VehiculoService {
 
         HistorialVehiculos historial = historialOptional.get();
         historial.setSalida(LocalDateTime.now());
+        BigDecimal costoHora = historial.getParqueadero().getCostoHora();
+        BigDecimal total = parqueaderoService.calcularCostoParqueadero(historial.getEntrada(), historial.getSalida(), costoHora);
+        historial.setTotal(total);
         historialVehiculosService.save(historial);
-        return "Salida registrada";
+        return new MensajeResponseDTO("Salida registrada.");
     }
     public Page<VehiculoResponseDTO> buscarVehiculosPorPlaca(String placaCoincidencia, Pageable pageable) {
         Page<Vehiculo> vehiculos = vehiculoRepository.findByPlacaCoincidencia(placaCoincidencia, pageable);

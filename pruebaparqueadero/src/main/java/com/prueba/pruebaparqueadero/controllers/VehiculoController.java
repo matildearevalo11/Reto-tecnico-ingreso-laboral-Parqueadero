@@ -3,8 +3,10 @@ import com.prueba.pruebaparqueadero.configuration.SecurityUtils;
 import com.prueba.pruebaparqueadero.services.VehiculoService;
 import com.prueba.pruebaparqueadero.services.dtos.req.VehiculoRequestDTO;
 import com.prueba.pruebaparqueadero.services.dtos.res.HistorialVehiculosResponseDTO;
+import com.prueba.pruebaparqueadero.services.dtos.res.MensajeResponseDTO;
 import com.prueba.pruebaparqueadero.services.dtos.res.VehiculoResponseDTO;
 import com.prueba.pruebaparqueadero.services.dtos.res.VehiculosParqueaderoResponseDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +24,7 @@ public class VehiculoController {
     @PostMapping("/save-entry/parking")
     @PreAuthorize("hasAuthority('SOCIO')")
     @ResponseStatus(HttpStatus.CREATED)
-    public int registrarEntradaVehiculo(@RequestBody VehiculoRequestDTO vehiculoDTO) {
+    public int registrarEntradaVehiculo(@Valid @RequestBody VehiculoRequestDTO vehiculoDTO) {
         int idUsuario = SecurityUtils.obtenerUsuarioActual().getId();
         HistorialVehiculosResponseDTO historial = vehiculoService.registrarEntradaVehiculo(vehiculoDTO, idUsuario);
         return historial.getId();
@@ -30,7 +32,7 @@ public class VehiculoController {
 
     @PostMapping("/save-output/parking")
     @PreAuthorize("hasAuthority('SOCIO')")
-    public String registrarSalidaVehiculo(@RequestBody VehiculoRequestDTO vehiculoDTO) {
+        public MensajeResponseDTO registrarSalidaVehiculo(@Valid @RequestBody VehiculoRequestDTO vehiculoDTO) {
         return vehiculoService.registrarSalidaVehiculo(vehiculoDTO.getPlaca());
     }
     @GetMapping("/by-parking/{idParqueadero}")

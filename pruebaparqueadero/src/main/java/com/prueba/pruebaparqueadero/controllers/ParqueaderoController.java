@@ -1,7 +1,9 @@
 package com.prueba.pruebaparqueadero.controllers;
 import com.prueba.pruebaparqueadero.services.ParqueaderoService;
 import com.prueba.pruebaparqueadero.services.dtos.req.ParqueaderoRequestDTO;
+import com.prueba.pruebaparqueadero.services.dtos.res.IdResponseDTO;
 import com.prueba.pruebaparqueadero.services.dtos.res.ParqueaderoResponseDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,12 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class ParqueaderoController {
 
     private final ParqueaderoService parqueaderoService;
-    private static final String MESSAGE = "message";
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public ParqueaderoResponseDTO crearParqueadero(@RequestBody ParqueaderoRequestDTO parqueaderoDto) {
+    public IdResponseDTO crearParqueadero(@Valid @RequestBody ParqueaderoRequestDTO parqueaderoDto) {
         return parqueaderoService.crearParqueadero(parqueaderoDto, parqueaderoDto.getIdSocio());
     }
 
@@ -32,12 +33,13 @@ public class ParqueaderoController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ParqueaderoResponseDTO actualizarParqueadero(@PathVariable int id, @RequestBody ParqueaderoRequestDTO parqueadero) {
+    public ParqueaderoResponseDTO actualizarParqueadero(@PathVariable int id, @Valid  @RequestBody ParqueaderoRequestDTO parqueadero) {
         return parqueaderoService.actualizarParqueadero(id, parqueadero);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarParqueadero(@PathVariable int id) {
         parqueaderoService.eliminarParqueadero(id);
     }

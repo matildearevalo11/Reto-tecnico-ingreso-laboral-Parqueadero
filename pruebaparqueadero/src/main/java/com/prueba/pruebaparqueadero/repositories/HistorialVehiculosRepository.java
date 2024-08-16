@@ -1,6 +1,7 @@
 package com.prueba.pruebaparqueadero.repositories;
 
 import com.prueba.pruebaparqueadero.entities.HistorialVehiculos;
+import com.prueba.pruebaparqueadero.entities.Parqueadero;
 import com.prueba.pruebaparqueadero.entities.Vehiculo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,5 +33,7 @@ public interface HistorialVehiculosRepository extends JpaRepository<HistorialVeh
 
     @Query("SELECT COUNT(h) FROM HistorialVehiculos h WHERE h.vehiculo.placa = :placa AND h.parqueadero.id = :idParqueadero")
     long countEntriesByPlacaAndParqueadero(@Param("placa") String placa, @Param("idParqueadero") int idParqueadero);
+
+    long countByParqueaderoAndSalidaIsNull(Parqueadero parqueadero);
 
 }

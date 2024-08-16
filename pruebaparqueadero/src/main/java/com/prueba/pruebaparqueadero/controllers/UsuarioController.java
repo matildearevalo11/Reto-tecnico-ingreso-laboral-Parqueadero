@@ -2,6 +2,7 @@ package com.prueba.pruebaparqueadero.controllers;
 import com.prueba.pruebaparqueadero.configuration.SecurityUtils;
 import com.prueba.pruebaparqueadero.services.UsuarioService;
 import com.prueba.pruebaparqueadero.services.dtos.res.ParqueaderoResponseDTO;
+import com.prueba.pruebaparqueadero.services.dtos.res.UsuarioResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,5 +23,11 @@ public class UsuarioController {
     public Page<ParqueaderoResponseDTO> obtenerParqueaderosDeUsuario(Pageable pageable) {
         int idUsuario = SecurityUtils.obtenerUsuarioActual().getId();
         return usuarioService.obtenerParqueaderosPorUsuarioSocio(idUsuario, pageable);
+    }
+
+    @GetMapping("/partners")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Page<UsuarioResponseDTO> obtenerSocios(Pageable pageable) {
+        return usuarioService.obtenerSocios(pageable);
     }
 }

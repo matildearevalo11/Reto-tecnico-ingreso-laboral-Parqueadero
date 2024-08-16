@@ -11,10 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
-
 import java.math.BigDecimal;
 import java.util.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -63,13 +61,13 @@ public class Seeder {
         usuarioRepository.save(admin);
         users.add(admin);
         for(int i=0;i<cantSocios;i++){
-            Usuario socio=seedUserPartner(Rol.SOCIO,null);
+            Usuario socio=seedUserPartner(Rol.SOCIO);
             users.add(socio);
         }
         return users;
     }
 
-    public Usuario seedUserPartner(Rol rol,Usuario socio){
+    public Usuario seedUserPartner(Rol rol){
         Usuario user=new Usuario();
         user.setEmail(fakeValuesService.bothify("????##@mail.com"));
         user.setNombre(faker.name().fullName());
@@ -92,7 +90,7 @@ public class Seeder {
     private List<Parqueadero> seedParkings(List<Usuario> usuarios) {
         List<Parqueadero> parqueaderos = new ArrayList<>();
         int totalParqueaderos = cantParqueaderos;
-        for (int i = 0; i < usuarios.size(); i++) {
+        for (int i = 1; i < usuarios.size(); i++) {
             Usuario usuario = usuarios.get(i);
             int numParqueaderos = random.nextInt(totalParqueaderos - (usuarios.size() - 1 - i)) + 1;
             numParqueaderos = Math.min(numParqueaderos, totalParqueaderos);

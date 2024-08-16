@@ -48,4 +48,15 @@ public class UsuarioService {
         List<ParqueaderoResponseDTO> listParqueadero = parqueaderos.getContent().stream().map(p -> modelMapper.map(p, ParqueaderoResponseDTO.class)).toList();
         return new PageImpl<>(listParqueadero, pageable, parqueaderos.getTotalElements());
     }
+
+    public Page<UsuarioResponseDTO> obtenerSocios(Pageable pageable){
+        Page<Usuario> socios = usuarioRepository.findAll(pageable);
+        List<UsuarioResponseDTO> listSocios = socios.filter(usuario -> usuario.getRol().equals(Rol.SOCIO)).map(p -> modelMapper.map(p, UsuarioResponseDTO.class)).toList();
+        return new PageImpl<>(listSocios, pageable, socios.getTotalElements());
+    }
+
+    public boolean existsByRolAdmin() {
+        return usuarioRepository.existsByRol(Rol.ADMIN);
+    }
+
 }

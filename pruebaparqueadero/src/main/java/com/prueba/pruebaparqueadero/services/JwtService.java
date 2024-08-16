@@ -8,6 +8,8 @@ import java.util.function.Function;
 
 import com.prueba.pruebaparqueadero.entities.Token;
 import com.prueba.pruebaparqueadero.repositories.TokenRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
@@ -21,6 +23,8 @@ public class JwtService {
 
     private static final String SECRET_KEY="586E3272357538782F413F4428472B4B6250655368566B597033733676397924";
     private final TokenRepository tokenRepository;
+    private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
+
 
     public JwtService(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;
@@ -90,7 +94,8 @@ public class JwtService {
                     .expiration(expiration)
                     .build();
             tokenRepository.save(revokedToken);
-            System.out.println("Token revocado: " + token);
+            logger.info("Token revocado: {}", token);
+
         }
 
     public Long getUserId(String token) {

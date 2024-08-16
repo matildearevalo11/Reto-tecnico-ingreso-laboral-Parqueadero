@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 @Data
 @Entity
@@ -30,5 +31,8 @@ public class HistorialVehiculos {
 
     @Column(name = "salida")
     private LocalDateTime salida;
+
+    @Column(name = "total")
+    private BigDecimal total;
 
 }
