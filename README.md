@@ -5,7 +5,8 @@
 </div>
 <div align="center">
   
-![nelumbo](https://github.com/user-attachments/assets/b395b8bb-0985-45a2-8d9e-302a9c45460f)
+![nelumbo](https://github.com/user-attachments/assets/1affcd6f-a2b9-4d8e-af0b-13b5f55fd05e)
+
 </div>
 
 ## Índice
@@ -55,7 +56,8 @@ ___
 
 ### Modelo Entidad Relación
 ___
-![MER-Parqueadero](https://github.com/user-attachments/assets/74393b2c-0ada-4d79-bf24-5ca6bc2ef48c)
+![MER-Parqueadero](https://github.com/user-attachments/assets/7e0c11f6-439b-42dd-b123-e9db0b33ab81)
+
 
 #### Herramientas utilizadas
 ___
