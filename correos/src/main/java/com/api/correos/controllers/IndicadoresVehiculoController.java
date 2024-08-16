@@ -1,12 +1,8 @@
 package com.api.correos.controllers;
-
-import com.api.correos.dtos.req.FechaRequestDTO;
 import com.api.correos.dtos.res.IndicadoresVehiculoResponseDTO;
-import com.api.correos.dtos.res.IngresosMesResponseDTO;
 import com.api.correos.services.VehiculoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 

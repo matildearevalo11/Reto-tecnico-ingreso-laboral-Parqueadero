@@ -1,7 +1,5 @@
 package com.api.correos.controllers;
-
 import com.api.correos.dtos.res.IndicadoresParqueaderoResponseDTO;
-import com.api.correos.dtos.res.IndicadoresVehiculoResponseDTO;
 import com.api.correos.services.ParqueaderoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,7 +1,5 @@
 package com.api.correos.repositories;
-
 import com.api.correos.dtos.res.IndicadoresParqueaderoResponseDTO;
-import com.api.correos.dtos.res.IndicadoresVehiculoResponseDTO;
 import com.api.correos.entities.Correo;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;

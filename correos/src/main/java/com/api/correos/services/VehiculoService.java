@@ -1,12 +1,9 @@
 package com.api.correos.services;
-
-import com.api.correos.dtos.req.FechaRequestDTO;
 import com.api.correos.dtos.res.IndicadoresVehiculoResponseDTO;
 import com.api.correos.dtos.res.IngresosMesResponseDTO;
 import com.api.correos.repositories.VehiculoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.time.YearMonth;
@@ -21,8 +18,7 @@ public class VehiculoService {
     private final VehiculoRepository vehiculoRepository;
 
     public List<IndicadoresVehiculoResponseDTO> ingresosVehiculosGeneral(){
-        List<IndicadoresVehiculoResponseDTO> listVehiculos = vehiculoRepository.findTop5VehiculosMasIngresosGeneral();
-        return listVehiculos;
+        return vehiculoRepository.findTop5VehiculosMasIngresosGeneral();
     }
 
     public List<IndicadoresVehiculoResponseDTO> ingresosVehiculoPorMes(int mes, int anio){
@@ -30,8 +26,7 @@ public class VehiculoService {
         LocalDateTime fechaInicio = yearMonth.atDay(1).atStartOfDay();
         LocalDateTime fechaFin = yearMonth.atEndOfMonth().atTime(23, 59, 59);
 
-        List<IndicadoresVehiculoResponseDTO> listVehiculos = vehiculoRepository.findTop5VehiculosMasIngresos(fechaInicio, fechaFin);
-        return listVehiculos;
+        return vehiculoRepository.findTop5VehiculosMasIngresos(fechaInicio, fechaFin);
     }
 
     public List<IndicadoresVehiculoResponseDTO> ingresosVehiculoPorAnio(int anio){
@@ -39,13 +34,11 @@ public class VehiculoService {
         LocalDateTime fechaInicio = year.atDay(1).atStartOfDay();
         LocalDateTime fechaFin = year.atMonth(12).atEndOfMonth().atTime(23,59,59);
 
-        List<IndicadoresVehiculoResponseDTO> listVehiculos = vehiculoRepository.findTop5VehiculosMasIngresos(fechaInicio, fechaFin);
-        return listVehiculos;
+        return vehiculoRepository.findTop5VehiculosMasIngresos(fechaInicio, fechaFin);
     }
 
     public List<IndicadoresVehiculoResponseDTO> ingresosVehiculoPorRangoDeTiempo(LocalDateTime fechaInicio, LocalDateTime fechaFin){
-        List<IndicadoresVehiculoResponseDTO> listVehiculos = vehiculoRepository.findTop5VehiculosMasIngresos(fechaInicio, fechaFin);
-        return listVehiculos;
+        return vehiculoRepository.findTop5VehiculosMasIngresos(fechaInicio, fechaFin);
     }
 
 
